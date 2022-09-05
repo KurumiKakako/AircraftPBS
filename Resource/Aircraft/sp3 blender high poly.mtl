@@ -1,0 +1,88 @@
+# Blender MTL File: 'sp3 blender high poly.blend'
+# Material Count: 7
+
+newmtl Material.026
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.000000 0.520717
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump Material_Normal_OpenGL.png
+map_Kd Material_Base_color.png
+map_Ns Material_Roughness.png
+refl Material_Metallic.png
+
+newmtl Material.027
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.005581 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump Material.002_Normal_OpenGL.png
+map_Kd Material.002_Base_color.png
+map_Ns Material.002_Roughness.png
+refl Material.002_Metallic.png
+
+newmtl Material.028
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000702 0.800000 0.047556
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump Material.001_Normal_OpenGL.png
+map_Kd Material.001_Base_color.png
+map_Ns Material.001_Roughness.png
+refl Material.001_Metallic.png
+
+newmtl Material.029
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.550995 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl Material.030
+Ns 359.999993
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl Material.031
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.000000 0.520717
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump Material.001_Normal.png
+map_Kd Material.001_Base_color.png
+map_Ns Material.001_Roughness.png
+refl Material.001_Metallic.png
+
+newmtl Material.032
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.005581 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 8.770799 10.000000
+Ni 1.450000
+d 1.000000
+illum 2

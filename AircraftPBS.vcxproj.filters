@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AircraftPBS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\glad\src\glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lighting.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="skybox.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="skybox.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="lighting.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="geometry.gs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="shadow_mapping_depth.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="shadow_mapping_depth.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="shadow_mapping_depth.gs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="hdr.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="hdr.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="light.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="light.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="blur.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="blur.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="bloom_final.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="bloom_final.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="cubemap.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="equirectangular_to_cubemap.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="irradiance_convolution.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="prefilter.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="brdf.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="brdf.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="pbs.fs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="pbs.vs">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>
