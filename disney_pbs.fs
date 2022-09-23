@@ -124,45 +124,71 @@ vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir_tangent) {
     return finalTexCoords;
 }
 
+float Pow5(float v) {
+	return v * v * v * v * v;
+}
+
+float sqr(float x) { return x*x; }
+
+vec3 Diffuse_Burley_Disney(vec3 diffuseColor, float roughness, float NdotV, float NdotL, float VdotH) {
+	float FD90 = 0.5 + 2 * VdotH * VdotH * roughness;
+	float FdV = 1 + (FD90 - 1) * Pow5( 1 - NdotV );
+	float FdL = 1 + (FD90 - 1) * Pow5( 1 - NdotL );
+	return diffuseColor * ( (1 / PI) * FdV * FdL );
+}
+
 // ----------------------------------------------------------------------------
-float DistributionGGX(vec3 N, vec3 H, float roughness) {
+// Generalized-Trowbridge-Reitz distribution
+float D_GTR1(float roughness, vec3 N, vec3 H) {
     float a = roughness*roughness;
-    float a2 = a*a;
+    float a2 = a * a;
     float NdotH = max(dot(N, H), 0.0);
-    float NdotH2 = NdotH*NdotH;
+    float cos2th = NdotH * NdotH;
+    float den = (1.0 + (a2 - 1.0) * cos2th);
 
-    float nom   = a2;
-    float denom = (NdotH2 * (a2 - 1.0) + 1.0);
-    denom = PI * denom * denom;
-
-    return nom / denom;
+    return (a2 - 1.0) / (PI * log(a2) * den);
 }
+
+float D_GTR2(float roughness, vec3 N, vec3 H) {
+    float a = roughness*roughness;
+    float a2 = a * a;
+    float NdotH = max(dot(N, H), 0.0);
+    float cos2th = NdotH * NdotH;
+    float den = (1.0 + (a2 - 1.0) * cos2th);
+
+    return a2 / (PI * den * den);
+}
+
+float GTR2_aniso(float NdotH, float HdotX, float HdotY, float ax, float ay) {
+    return 1 / (PI * ax*ay * sqr( sqr(HdotX/ax) + sqr(HdotY/ay) + NdotH*NdotH ));
+}
+
 // ----------------------------------------------------------------------------
-float GeometrySchlickGGX(float NdotV, float roughness) {
+float smithG_GGX(float NdotV, float roughness) {
     float r = (roughness + 1.0);
-    float k = (r*r) / 8.0;
+    float alphaG = (r*r) / 4.0;
 
-    float nom   = NdotV;
-    float denom = NdotV * (1.0 - k) + k;
-
-    return nom / denom;
+    float a = alphaG*alphaG;
+    float b = NdotV*NdotV;
+    return 1 / (NdotV + sqrt(a + b - a*b));
 }
-// ----------------------------------------------------------------------------
+
 float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness) {
     float NdotV = max(dot(N, V), 0.0);
     float NdotL = max(dot(N, L), 0.0);
-    float ggx2 = GeometrySchlickGGX(NdotV, roughness);
-    float ggx1 = GeometrySchlickGGX(NdotL, roughness);
+    float ggx2 = smithG_GGX(NdotV, roughness);
+    float ggx1 = smithG_GGX(NdotL, roughness);
 
     return ggx1 * ggx2;
 }
+
 // ----------------------------------------------------------------------------
 vec3 fresnelSchlick(float cosTheta, vec3 F0) {
-    return F0 + (1.0 - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
+    return F0 + (1.0 - F0) * Pow5(clamp(1.0 - cosTheta, 0.0, 1.0));
 }
 
 vec3 fresnelSchlickRoughness(float cosTheta, vec3 F0, float roughness) {
-    return F0 + (max(vec3(1.0 - roughness), F0) - F0) * pow(1.0 - cosTheta, 5.0);
+    return F0 + (max(vec3(1.0 - roughness), F0) - F0) * Pow5(1.0 - cosTheta);
 } 
 
 // ----------------------------------------------------------------------------
@@ -208,38 +234,30 @@ void main() {
         vec3 radiance = pointLights[i].color * attenuation;
     
         // Cook-Torrance BRDF
-        float NDF = DistributionGGX(normal_tangent, halfwayDir_tangent, roughness);   
+        float D = D_GTR2(roughness, normal_tangent, halfwayDir_tangent); 
         float G = GeometrySmith(normal_tangent, viewDir_tangent, lightDir_tangent, roughness);      
         vec3 F = fresnelSchlick(max(dot(halfwayDir_tangent, viewDir_tangent), 0.0), F0);
 
-        vec3 numerator    = NDF * G * F; 
+        vec3 numerator    = D * G * F; 
         float denominator = 4.0 * max(dot(normal_tangent, viewDir_tangent), 0.0) * max(dot(normal_tangent, lightDir_tangent), 0.0) + 0.0001; // + 0.0001 to prevent divide by zero
         vec3 specular = numerator / denominator;
 
-        // kS is equal to Fresnel
-        vec3 kS = F;
-        // for energy conservation, the diffuse and specular light can't
-        // be above 1.0 (unless the surface emits light); to preserve this
-        // relationship the diffuse component (kD) should equal 1.0 - kS.
-        vec3 kD = vec3(1.0) - kS;
-        // multiply kD by the inverse metalness such that only non-metals 
-        // have diffuse lighting, or a linear blend if partly metal (pure metals
-        // have no diffuse light).
-        kD *= 1.0 - metallic;	
-        vec3 diffuse = kD * albedo / PI;
-
-        // scale light by NdotL
-        float NdotL = max(dot(normal_tangent, lightDir_tangent), 0.0);        
+        float NdotV = max(dot(normal_tangent, viewDir_tangent), 0.0);
+        float NdotL = max(dot(normal_tangent, lightDir_tangent), 0.0);
+        float VdotH = max(dot(viewDir_tangent, halfwayDir_tangent), 0.0);
+        
+        vec3 diffuse = Diffuse_Burley_Disney(albedo, roughness, NdotV, NdotL, VdotH) * (1-metallic);
 
         // add to outgoing radiance Lo
         Lo += (1.0 - shadow) * (diffuse + specular) * radiance * NdotL;  // note that we already multiplied the BRDF by the Fresnel (kS) so we won't multiply by kS again 
     }
 
+    // -----------------------------haven't updated to fit Disney brdf-------------------------------
     // ambient lighting (we now use IBL as the ambient term)
     vec3 F = fresnelSchlickRoughness(max(dot(normal_tangent, viewDir_tangent), 0.0), F0, roughness);
     vec3 kS = F;
     vec3 kD = 1.0 - kS;
-    kD *= 1.0 - metallic;	
+    kD *= 1.0 - metallic;
     
     vec3 irradiance = texture(irradianceMap, WorldNormal).rgb;
     vec3 diffuse = irradiance * albedo;
@@ -253,6 +271,7 @@ void main() {
     vec3 specular = prefilteredColor * (F * brdf.x + brdf.y);
 
     vec3 ambient = (kD * diffuse + specular) * ao;
+    // -----------------------------------------------------------------------------------------------
     
     vec3 color = ambient + Lo;
     if (hasEmissive) {

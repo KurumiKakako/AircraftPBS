@@ -24,12 +24,11 @@ struct Vertex {
     glm::vec2 TexCoords;
     // tangent
     glm::vec3 Tangent;
-    // bitangent
-    // glm::vec3 Bitangent;
+    // bitangen
     //bone indexes which will influence this vertex
-    int m_BoneIDs[MAX_BONE_INFLUENCE];
+    //int m_BoneIDs[MAX_BONE_INFLUENCE];
     //weights from each bone
-    float m_Weights[MAX_BONE_INFLUENCE];
+    //float m_Weights[MAX_BONE_INFLUENCE];
 };
 
 struct Texture {
@@ -158,11 +157,10 @@ private:
         // ids
         /*glEnableVertexAttribArray(5);
         glVertexAttribIPointer(5, 4, GL_INT, sizeof(Vertex), (void*)offsetof(Vertex, m_BoneIDs));*/
-
         // weights
-        glEnableVertexAttribArray(6);
+        /*glEnableVertexAttribArray(6);
         glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_Weights));
-        glBindVertexArray(0);
+        glBindVertexArray(0);*/
     }
 };
 #endif

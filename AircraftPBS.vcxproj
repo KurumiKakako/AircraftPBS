@@ -156,6 +156,7 @@
     <None Include="brdf.fs" />
     <None Include="brdf.vs" />
     <None Include="cubemap.vs" />
+    <None Include="disney_pbs.fs" />
     <None Include="equirectangular_to_cubemap.fs" />
     <None Include="geometry.gs" />
     <None Include="hdr.fs" />

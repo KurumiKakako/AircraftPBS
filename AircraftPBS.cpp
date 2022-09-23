@@ -44,7 +44,7 @@ bool parallaxKeyPressed = false;
 float height_scale = 0.1f;
 bool hdr = true;
 bool hdrKeyPressed = false;
-bool bloom = true;
+bool bloom = false;
 bool bloomKeyPressed = false;
 float exposure = 1.0f;
 
@@ -110,7 +110,7 @@ int main()
     // Shader testShader("test.vs", "", "test.fs");
     Shader depthShader("shadow_mapping_depth.vs", "shadow_mapping_depth.gs", "shadow_mapping_depth.fs");
     // Shader lightingShader("lighting.vs", "", "lighting.fs");
-    Shader pbrShader("pbs.vs", "", "pbs.fs");
+    Shader pbrShader("pbs.vs", "", "disney_pbs.fs");
     Shader lightShader("light.vs", "", "light.fs");
     // Shader hdrShader("hdr.vs", "", "hdr.fs");
     Shader blurShader("blur.vs", "", "blur.fs");

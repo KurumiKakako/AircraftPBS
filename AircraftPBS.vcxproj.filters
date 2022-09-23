@@ -115,5 +115,8 @@
     <None Include="pbs.vs">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="disney_pbs.fs">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
