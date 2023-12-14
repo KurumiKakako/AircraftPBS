@@ -472,6 +472,8 @@ int main()
         depthShader.setFloatUniform("far_plane", far_plane);
         depthShader.setVec3Uniform("lightPos", lightPos);
         glm::mat4 model = glm::mat4(1.0);
+        model = glm::translate(model, glm::vec3(25.0f, 0.0f, -25.0f));
+        model = glm::rotate(model, glm::radians(-60.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         depthShader.setMat4Uniform("model", model);
         myModel.Draw(depthShader);
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
