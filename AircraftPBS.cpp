@@ -30,8 +30,8 @@ void renderSphere();
 void renderCube();
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1600;
+const unsigned int SCR_HEIGHT = 1200;
 // Options
 bool blinn = true;
 bool blinnKeyPressed = false;
@@ -71,7 +71,7 @@ int main()
 #endif
 
     // create a window object and make the context of the window the main context on the current thread
-    GLFWwindow* window = glfwCreateWindow(800, 600, "AircraftPBR", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "AircraftPBR", NULL, NULL);
     if (window == NULL)
     {
         cout << "Failed to create GLFW window" << std::endl;
@@ -122,7 +122,7 @@ int main()
     Shader skyboxShader("skybox.vs", "", "skybox.fs");
 
     // load models
-    Model myModel("C:/Users/voldenuit/Desktop/AircraftPBS/Resource/Aircraft/sp3 blender low poly.obj");
+    Model myModel("D:/Projects/Git/AircraftPBS/Resource/Aircraft/sp3 blender low poly.obj");
 
     // --------------------------------------------------------------------------------
     // configure a uniform buffer object
@@ -235,7 +235,7 @@ int main()
 
     // --------------------------------------------------------------------------------
     // pbr: load the HDR environment map
-    unsigned int hdrTexture = loadHDRTexture("C:/Users/voldenuit/Desktop/AircraftPBS/Resource/Milkyway/Milkyway_small.hdr", true);
+    unsigned int hdrTexture = loadHDRTexture("D:/Projects/Git/AircraftPBS/Resource/HDR/small_empty_house_2k.hdr", true);
 
     // setup cubemap to render to and attach to framebuffer
     unsigned int envCubemap;
